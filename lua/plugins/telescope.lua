@@ -12,6 +12,12 @@ return {
         desc = "Find Plugin File",
       },
       { "<leader>fg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+      -- replace LazyVim "files" with telescope's builtin "find_files".
+      { "<leader><space>", Util.telescope("find_files"), desc = "Find Files (root dir)" },
+      { "<leader>ff", Util.telescope("find_files"), desc = "Find Files (root dir)" },
+      { "<leader>fF", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
+      -- Add Ctrl-P mapping.
+      { "<C-p>", Util.telescope("find_files"), desc = "Find Files (root dir)" },
     },
     opts = {
       defaults = {
