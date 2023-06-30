@@ -11,13 +11,14 @@ return {
         function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
         desc = "Find Plugin File",
       },
-      { "<leader>fg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>fg", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       -- replace LazyVim "files" with telescope's builtin "find_files".
+      -- Invert mapping so lowercase is cwd
       { "<leader><space>", Util.telescope("find_files"), desc = "Find Files (root dir)" },
-      { "<leader>ff", Util.telescope("find_files"), desc = "Find Files (root dir)" },
-      { "<leader>fF", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
+      { "<leader>fF", Util.telescope("find_files"), desc = "Find Files (root dir)" },
+      { "<leader>ff", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
       -- Add Ctrl-P mapping.
-      { "<C-p>", Util.telescope("find_files"), desc = "Find Files (root dir)" },
+      { "<C-p>", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
     },
     opts = {
       defaults = {
