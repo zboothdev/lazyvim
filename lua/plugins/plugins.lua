@@ -10,4 +10,7 @@ return {
     },
   },
   { "jlanzarotta/bufexplorer" },
+
+  -- disable leap
+  { "ggandor/leap.nvim", enabled = false },
 }
