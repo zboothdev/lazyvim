@@ -16,7 +16,13 @@ return {
       -- Invert mapping so lowercase is cwd
       { "<leader><space>", Util.telescope("find_files"), desc = "Find Files (root dir)" },
       { "<leader>fF", Util.telescope("find_files"), desc = "Find Files (root dir)" },
-      { "<leader>ff", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
+      {
+        "<leader>ff",
+        function()
+          require("telescope.builtin").find_files({ cwd = false, default_text = vim.fn.expand("<cfile>") })
+        end,
+        desc = "Find Files (cwd)",
+      },
       -- Add Ctrl-P mapping.
       { "<C-p>", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
     },
