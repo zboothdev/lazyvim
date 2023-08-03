@@ -13,4 +13,6 @@ return {
 
   -- disable leap
   { "ggandor/leap.nvim", enabled = false },
+  -- disable flash
+  { "folke/flash.nvim", enabled = false },
 }
