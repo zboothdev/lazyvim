@@ -11,5 +11,24 @@
         "enabled": true
       }
     }
-  }
+  },
+  // "telescope": {
+  //   "find_files_command": [
+  //       "rg",
+  //       "--color=never",
+  //       "--no-ignore-vcs",
+  //       "--files",
+  //       "--follow"
+  //   ],
+  //   "vimgrep_arguments_command": [
+  //       "rg",
+  //       "--color=never",
+  //       "--no-ignore-vcs",
+  //       "--no-heading",
+  //       "--with-filename",
+  //       "--line-number",
+  //       "--column",
+  //       "--smart-case"
+  //   ]
+  // }
 }

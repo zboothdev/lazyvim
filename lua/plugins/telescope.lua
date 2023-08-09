@@ -1,5 +1,33 @@
 local Util = require("lazyvim.util")
 
+local defaults = {
+  find_files_command = {
+    "rg",
+    "--color=never",
+    "--no-ignore-vcs",
+    "--files",
+  },
+  vimgrep_arguments_command = {
+    "rg",
+    "--color=never",
+    "--no-ignore-vcs",
+    "--no-heading",
+    "--with-filename",
+    "--line-number",
+    "--column",
+    "--smart-case",
+  },
+}
+
+-- Neoconf integration
+require("neoconf.plugins").register({
+  name = "telescope",
+  on_schema = function(schema)
+    -- this call will create a json schema based on the lua types of your default settings
+    schema:import("telescope", defaults)
+  end,
+})
+
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -26,6 +54,9 @@ return {
       -- Add Ctrl-P mapping.
       { "<C-p>", Util.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
     },
+    dependencies = {
+      { "nvim-lspconfig" }, -- HACK: the spec for nvim-lspconfig manually performs the neoconf setup()
+    },
     opts = {
       defaults = {
         layout_strategy = "vertical",
@@ -35,27 +66,21 @@ return {
         },
         sorting_strategy = "ascending",
         winblend = 0,
-        vimgrep_arguments = {
-          "rg",
-          "--color=never",
-          "--no-ignore-vcs",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--smart-case",
-        },
-      },
-      pickers = {
-        find_files = {
-          find_command = {
-            "rg",
-            "--color=never",
-            "--no-ignore-vcs",
-            "--files",
-          },
-        },
       },
     },
+    config = function(_, opts)
+      -- Note: opts should be the merged table from all plugin specs.
+      local conf = require("neoconf").get("telescope", defaults)
+
+      -- Set find commands based on defaults.
+      opts.defaults.vimgrep_arguments = conf.vimgrep_arguments_command
+      opts.pickers = {
+        find_files = {
+          find_command = conf.find_files_command,
+        },
+      }
+      -- Need to pass modified opts to actual plugin.
+      require("telescope").setup(opts)
+    end,
   },
 }
